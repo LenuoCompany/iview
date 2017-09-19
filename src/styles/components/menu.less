@@ -8,12 +8,12 @@
     outline: none;
     list-style: none;
     color: @text-color;
-    font-size: @font-size-base;
+    font-size: 15px;
     position: relative;
 
     &-horizontal{
-        height: 60px;
-        line-height: 60px;
+        height: 50px;
+        line-height: 50px;
 
         &.@{menu-prefix-cls}-light{
             &:after{
@@ -59,7 +59,7 @@
         display: block;
         outline: none;
         list-style: none;
-        font-size: @font-size-base;
+        font-size: 15px;
         position: relative;
         z-index: 1;
         cursor: pointer;
@@ -69,7 +69,7 @@
         margin-right: 6px;
     }
     &-submenu-title > i, &-submenu-title span > i{
-        margin-right: 8px;
+        margin-left: 8px;
     }
 
     &-horizontal &-item,
@@ -230,6 +230,6 @@
 .select-item(@menu-prefix-cls, @menu-dropdown-item-prefix-cls);
 
 .@{menu-dropdown-item-prefix-cls} {
-    padding: 7px 16px 8px;
+    padding: 12px 16px 12px;
     font-size: @font-size-base !important;
 }

@@ -10,7 +10,7 @@
         <transition name="slide-up" v-else>
             <Drop
                 v-show="opened"
-                placement="bottom"
+                :placement="placement"
                 ref="drop"
                 :style="dropStyle"><ul :class="[prefixCls + '-drop-list']"><slot></slot></ul>
             </Drop>
@@ -38,6 +38,10 @@
             disabled: {
                 type: Boolean,
                 default: false
+            },
+            placement: {
+                type: String,
+                default: 'bottom'
             }
         },
         data () {

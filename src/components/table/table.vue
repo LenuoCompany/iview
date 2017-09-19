@@ -246,8 +246,12 @@
                             width = this.tableWidth - this.scrollBarWidth;
                         }
                     }
-//                    const width = this.bodyHeight === 0 ? this.tableWidth : this.tableWidth - this.scrollBarWidth;
-                    style.width = `${width}px`;
+                    // const width = this.bodyHeight === 0 ? this.tableWidth : this.tableWidth - this.scrollBarWidth;
+                    if (!this.width) {
+                        style.width = '100%';
+                    } else {
+                        style.width = `${width}px`;
+                    }
                 }
                 return style;
             },
@@ -355,7 +359,8 @@
                                 this.cloneColumns[i]._width = width;
 
                                 columnsWidth[column._index] = {
-                                    width: width
+                                    // width: width
+                                    width: 'auto'
                                 };
                             }
                             this.columnsWidth = columnsWidth;

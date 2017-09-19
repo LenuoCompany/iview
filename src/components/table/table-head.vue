@@ -83,7 +83,7 @@
             styles () {
                 const style = Object.assign({}, this.styleObject);
                 const width = this.$parent.bodyHeight === 0 ? parseInt(this.styleObject.width) : parseInt(this.styleObject.width) + this.$parent.scrollBarWidth;
-                style.width = `${width}px`;
+                style.width = `${width}%`;
                 return style;
             },
             isSelectAll () {
