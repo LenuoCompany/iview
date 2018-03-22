@@ -8,9 +8,11 @@ import App from './app.vue';
 import iView from '../src/index';
 import locale from '../src/locale/lang/en-US';
 // import locale from '../src/locale/lang/zh-CN';
+import VueScroller from 'vue-scroller';
 
 Vue.use(VueRouter);
 Vue.use(iView, { locale });
+Vue.use(VueScroller);
 
 // 开启debug模式
 Vue.config.debug = true;

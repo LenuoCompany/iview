@@ -1,7 +1,12 @@
 <template>
-    <div>
-        <Table border ref="selection" :columns="columns4" :data="data1"></Table>
-        <Button @click="handleSetData">Set Data</Button>
+  <div>
+    <scroller
+        :on-refresh="refresh"
+        :on-infinite="infinite">
+      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+    </scroller>
+
+    <Button @click="handleSetData">Set Data</Button>
         <Button @click="handleClearData">Clear Data</Button>
         <Button @click="handleSelectAll(true)">Set all selected</Button>
         <Button @click="handleSelectAll(false)">Cancel all selected</Button>
@@ -69,7 +74,13 @@
             },
             handleClearData () {
                 this.data1 = [];
-            }
+            },
+          refresh () {
+            console.log('refresh');
+          },
+          infinite () {
+            console.log('infinite');
+          }
         }
     }
 </script>
