@@ -11,8 +11,11 @@
                     :columns-width="columnsWidth"
                     :data="rebuildData"></table-head>
             </div>
-            <div :class="[prefixCls + '-body']" :style="bodyStyle" ref="body" @scroll="handleBodyScroll"
+            <div :class="[prefixCls + '-body']" style="position: relative; height: calc(100vh - 200px)" :style="bodyStyle" ref="body" @scroll="handleBodyScroll"
                 v-show="!((!!localeNoDataText && (!data || data.length === 0)) || (!!localeNoFilteredDataText && (!rebuildData || rebuildData.length === 0)))">
+                <scroller 
+                :on-refresh="refresh"
+                :on-infinite="infinite">
                 <table-body
                     ref="tbody"
                     :prefix-cls="prefixCls"
@@ -21,6 +24,7 @@
                     :data="rebuildData"
                     :columns-width="columnsWidth"
                     :obj-data="objData"></table-body>
+                </scroller>
             </div>
             <div
                 :class="[prefixCls + '-tip']"
@@ -339,6 +343,12 @@
             }
         },
         methods: {
+            refresh () {
+                console.log('refresh');
+            },
+            infinite () {
+                console.log('infinite');
+            },
             rowClsName (index) {
                 return this.rowClassName(this.data[index], index);
             },

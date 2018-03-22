@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <scroller
-        :on-refresh="refresh"
-        :on-infinite="infinite">
-      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
-    </scroller>
+<div>
 
-    <Button @click="handleSetData">Set Data</Button>
+    <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+
+    <Button @click="handleSetData" style="position:relative; z-index: 1000">Set Data</Button>
         <Button @click="handleClearData">Clear Data</Button>
         <Button @click="handleSelectAll(true)">Set all selected</Button>
         <Button @click="handleSelectAll(false)">Cancel all selected</Button>
-    </div>
+</div>
+    
 </template>
 <script>
     export default {

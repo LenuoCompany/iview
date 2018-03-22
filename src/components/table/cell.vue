@@ -71,10 +71,10 @@
         },
         methods: {
             toggleSelect () {
-                this.$parent.$parent.$parent.toggleSelect(this.index);
+                this.$parent.$parent.$parent.$parent.toggleSelect(this.index);
             },
             toggleExpand () {
-                this.$parent.$parent.$parent.toggleExpand(this.index);
+                this.$parent.$parent.$parent.$parent.toggleExpand(this.index);
             },
             handleClick () {
                 // 放置 Checkbox 冒泡

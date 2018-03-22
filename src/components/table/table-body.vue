@@ -58,6 +58,12 @@
             fixed: {
                 type: [Boolean, String],
                 default: false
+            },
+            rowClassName: {
+                type: Function,
+                default () {
+                    return '';
+                }
             }
         },
         computed: {
@@ -75,6 +81,9 @@
             }
         },
         methods: {
+            rowClsName (index) {
+                return this.rowClassName(this.data[index], index);
+            },
             rowChecked (_index) {
                 return this.objData[_index] && this.objData[_index]._isChecked;
             },
@@ -85,10 +94,10 @@
                 return this.objData[_index] && this.objData[_index]._isExpanded;
             },
             handleMouseIn (_index) {
-                this.$parent.handleMouseIn(_index);
+                this.$parent.$parent.handleMouseIn(_index);
             },
             handleMouseOut (_index) {
-                this.$parent.handleMouseOut(_index);
+                this.$parent.$parent.handleMouseOut(_index);
             },
             clickCurrentRow (_index) {
                 this.$parent.clickCurrentRow(_index);
