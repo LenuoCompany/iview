@@ -100,10 +100,10 @@
                 this.$parent.$parent.handleMouseOut(_index);
             },
             clickCurrentRow (_index) {
-                this.$parent.clickCurrentRow(_index);
+                this.$parent.$parent.clickCurrentRow(_index);
             },
             dblclickCurrentRow (_index) {
-                this.$parent.dblclickCurrentRow(_index);
+                this.$parent.$parent.dblclickCurrentRow(_index);
             }
         }
     };
