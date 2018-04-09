@@ -13,18 +13,25 @@
             </div>
             <div :class="[prefixCls + '-body']" style="position: relative; height: calc(100vh - 200px)" :style="bodyStyle" ref="body" @scroll="handleBodyScroll"
                 v-show="!((!!localeNoDataText && (!data || data.length === 0)) || (!!localeNoFilteredDataText && (!rebuildData || rebuildData.length === 0)))">
-                <scroller 
-                :on-refresh="refresh"
-                :on-infinite="infinite">
-                <table-body
-                    ref="tbody"
-                    :prefix-cls="prefixCls"
-                    :styleObject="tableStyle"
-                    :columns="cloneColumns"
-                    :data="rebuildData"
-                    :columns-width="columnsWidth"
-                    :obj-data="objData"></table-body>
-                </scroller>
+                <jroll-infinite class="jroll-vue-infinite"
+                    total="10"
+                    ref="viewBox"
+                    :jroll-options="options"
+                    :pulldown-options="{}"
+                    @on-scroll="jrollScroll"
+                    @on-pulldown="pulldown"
+                    @on-scroll-bottom="scrollBottom"
+                    @on-scroll-start="scrollStart"
+                    @on-scroll-end="scrollEnd">
+                    <table-body
+                        ref="tbody"
+                        :prefix-cls="prefixCls"
+                        :styleObject="tableStyle"
+                        :columns="cloneColumns"
+                        :data="rebuildData"
+                        :columns-width="columnsWidth"
+                        :obj-data="objData"></table-body>
+                </jroll-infinite>
             </div>
             <div
                 :class="[prefixCls + '-tip']"
@@ -176,6 +183,10 @@
         },
         data () {
             return {
+                options: {
+                    scrollBarY: true,
+                    scrollBarFade: false
+                },
                 ready: false,
                 tableWidth: 0,
                 columnsWidth: {},
@@ -346,8 +357,40 @@
             refresh () {
                 console.log('refresh');
             },
+            jrollScroll (e) {
+                // console.log(e.y);
+            },
             infinite () {
                 console.log('infinite');
+            },
+            pulldown (success, error) {
+                console.log('pulldown');
+                // success()
+            },
+            scrollBottom (page, success, error) {
+                console.log('scrollBottom');
+                // success()
+                
+            },
+            scrollStart (e) {
+                console.log('scrollStart');
+                // console.log(e.minScrollY)
+                // console.log(e.y)
+                // if (e.y < e.minScrollY) {
+                //     // this.pulldown();
+                //     console.log('123')
+                // }
+            },
+            scrollEnd (e) {
+                console.log('scrollEnd');
+                if (e.y < e.minScrollY && e.y > 0) {
+                    // this.pulldown();
+                    console.log('停止刷新')
+                    this.scrollTop(0, 0, 200, true).minScrollY = 0;
+                }
+            },
+            scrolling () {
+                var JRolls = this.$refs.viewBox;
             },
             rowClsName (index) {
                 return this.rowClassName(this.data[index], index);
@@ -764,6 +807,7 @@
             this.rebuildData = this.makeDataWithSortAndFilter();
         },
         mounted () {
+            this.scrolling();
             this.handleResize();
             this.fixedHeader();
             this.$nextTick(() => this.ready = true);

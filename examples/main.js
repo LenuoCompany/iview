@@ -10,7 +10,16 @@ import locale from '../src/locale/lang/en-US';
 // import locale from '../src/locale/lang/zh-CN';
 import VueScroller from 'vue-scroller';
 
+import JRoll from 'jroll';
+import JrollPulldown from 'jroll-pulldown';
+import VueInfinite from 'jroll-vue-infinite2';
+import { Option } from '../src/components/tag';
+Vue.component('jroll-infinite', JRoll.VueInfinite2());
+
 Vue.use(VueRouter);
+Vue.use(VueInfinite);
+JrollPulldown.aaabbb = '';
+
 Vue.use(iView, { locale });
 Vue.use(VueScroller);
 
