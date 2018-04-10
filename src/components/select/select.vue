@@ -39,8 +39,11 @@
                 ref="dropdown"
                 :data-transfer="transfer"
                 v-transfer-dom>
+                <slot v-if="!header" name="header"/>
                 <ul v-show="notFoundShow" :class="[prefixCls + '-not-found']"><li>{{ localeNotFoundText }}</li></ul>
+                <div :class="[prefixCls + '-dropdown-body']">
                 <ul v-show="(!notFound && !remote) || (remote && !loading && !notFound)" :class="[prefixCls + '-dropdown-list']"><slot></slot></ul>
+                </div>
                 <ul v-show="loading" :class="[prefixCls + '-loading']">{{ localeLoadingText }}</ul>
             </Drop>
         </transition>
@@ -123,9 +126,10 @@
             },
             placement: {
                 validator (value) {
-                    return oneOf(value, ['top', 'bottom']);
+                    return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
                 },
-                default: 'bottom'
+                default: 'bottom',
+                type: String
             },
             transfer: {
                 type: Boolean,
@@ -243,7 +247,8 @@
                 }
             },
             transitionName () {
-                return this.placement === 'bottom' ? 'slide-up' : 'slide-down';
+                const bottomPlaced = this.placement.match(/^bottom/);
+                return bottomPlaced ? 'slide-up' : 'slide-down';
             },
             dropVisible () {
                 let status = true;
@@ -557,14 +562,26 @@
             resetScrollTop () {
                 const index = this.focusIndex - 1;
                 if (!this.optionInstances.length) return;
-                let bottomOverflowDistance = this.optionInstances[index].$el.getBoundingClientRect().bottom - this.$refs.dropdown.$el.getBoundingClientRect().bottom;
-                let topOverflowDistance = this.optionInstances[index].$el.getBoundingClientRect().top - this.$refs.dropdown.$el.getBoundingClientRect().top;
+                // let bottomOverflowDistance = this.optionInstances[index].$el.getBoundingClientRect().bottom - this.$refs.dropdown.$el.getBoundingClientRect().bottom;
+                // let topOverflowDistance = this.optionInstances[index].$el.getBoundingClientRect().top - this.$refs.dropdown.$el.getBoundingClientRect().top;
+
+                // if (bottomOverflowDistance > 0) {
+                //     this.$refs.dropdown.$el.scrollTop += bottomOverflowDistance;
+                // }
+                // if (topOverflowDistance < 0) {
+                //     this.$refs.dropdown.$el.scrollTop += topOverflowDistance;
+                // }
+                let optionInstancesIndex = this.optionInstances[index].$el.parentElement.parentElement;
+                let bottomOverflowDistance = this.optionInstances[index].$el.getBoundingClientRect().bottom - optionInstancesIndex.getBoundingClientRect().bottom;
+                let topOverflowDistance = this.optionInstances[index].$el.getBoundingClientRect().top - optionInstancesIndex.getBoundingClientRect().top;
+
+                // console.log(this.optionInstances[index]);
 
                 if (bottomOverflowDistance > 0) {
-                    this.$refs.dropdown.$el.scrollTop += bottomOverflowDistance;
+                    optionInstancesIndex.scrollTop += bottomOverflowDistance;
                 }
                 if (topOverflowDistance < 0) {
-                    this.$refs.dropdown.$el.scrollTop += topOverflowDistance;
+                    optionInstancesIndex.scrollTop += topOverflowDistance;
                 }
             },
             handleBlur () {
